@@ -20,14 +20,9 @@ export default function Layout({ children }) {
       </>
     );
   }
-
   return (
     <>
-      {/* <div className="bg-gray-100 min-h-screen flex">
-        <AsideNav />
-        <div className="mt-5 ml-5">{children}</div>
-      </div> */}
-      <div className="bg-gray-100 min-h-screen flex">
+      <div className="bg-gray-200 min-h-screen flex">
         <AsideNav className="general-navbar" />
         <div className="general-content m-5">
           <UserCard />
