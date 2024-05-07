@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+.aside {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .general-navbar {
   width: 15% !important;
 }
 
 .general-content {
-  width: 85% !important;
+  width: 100% !important;
+  /* padding-left: 236px; */
 }
 
 .navbar-brand-img {
@@ -23,13 +34,14 @@ table.basic thead tr {
   background-color: black;
 }
 
+table.basic thead tr th,
 table.basic thead tr td {
   color: white !important;
 }
 
 table.basic thead tr td,
 table.basic thead tr th {
-  @apply text-sm text-gray-600 uppercase border-b border-gray-200 px-4 py-2;
+  @apply text-sm text-gray-600 uppercase border-b border-black px-4 py-2;
 }
 table.basic tr td {
   @apply px-4 py-1;
@@ -43,15 +55,31 @@ table.basic a {
   @apply px-4 rounded-sm inline-flex mx-1 items-center gap-1 text-sm py-1;
 }
 
+table.basic-categories tbody tr td:not(:last-child):not(:nth-child(2)) {
+  border-right: 1px solid #e5e7eb;
+}
+
+table.basic-categories
+  tbody
+  tr:nth-child(even)
+  td:not(:last-child):not(:nth-child(2)) {
+  border-right: 1px solid white;
+}
+
 .btn-default,
 .btn-red {
   @apply px-4 py-1 rounded-md;
+  width: 100px;
 }
 .btn-red {
   @apply bg-red-200 text-red-600 px-4 py-1 rounded-sm shadow-sm;
 }
 .btn-default {
   @apply bg-white text-gray-800 px-4 py-1 rounded-sm border border-gray-200 shadow-sm;
+}
+
+.main-form {
+  max-width: 500px;
 }
 
 .cancel-delete-button {
@@ -80,11 +108,16 @@ table.basic a {
 }
 
 .image-container {
-  height: 200px;
-  width: 200px;
+  height: 225px;
+  width: 225px;
   overflow: hidden;
 }
 
 .add-image {
   width: 200px;
+}
+
+input,
+textarea {
+  max-width: 500px;
 }

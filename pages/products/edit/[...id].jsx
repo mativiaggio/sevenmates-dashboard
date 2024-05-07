@@ -18,10 +18,10 @@ export default function EditProductPage() {
   }, [id]);
   return (
     <Layout>
-      <h2 className="text-base font-semibold leading-7 text-gray-900">
+      <h2 className="text-base font-semibold leading-7 text-gray-900 text-center">
         Editar el producto
       </h2>
-      <p className="mt-1 text-sm leading-6 text-gray-600">
+      <p className="mt-1 text-sm leading-6 text-gray-600 text-center">
         Llena los datos para poder editar el producto y subirlo a la base de
         datos.
       </p>

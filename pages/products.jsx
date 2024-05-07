@@ -38,13 +38,13 @@ function Products() {
         <table className="basic mt-2">
           <thead>
             <tr>
-              <td>Productos</td>
-              <td></td>
+              <th className="text-white">Productos</th>
+              <th className="text-white"></th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product._id}>
+              <tr id={product._id} key={product._id}>
                 <td>{product.name}</td>
                 <td className="float-right">
                   <Link

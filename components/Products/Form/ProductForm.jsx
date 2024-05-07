@@ -2,28 +2,37 @@ import SpinnerBar from "@/components/Spinners/SpinnerBar";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
 function ProductForm({
   _id,
   name: existingName,
+  category: existingCategory,
   description: existingDescription,
   price: existingPrice,
   images: existingImages,
 }) {
   const [name, setName] = useState(existingName || "");
+  // const [category, setCategory] = useState(existingCategory || []);
+  const [category, setCategory] = useState(existingCategory || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
   const [goToProducts, setGoToProducts] = useState(false);
   const [images, setImages] = useState(existingImages || []);
   const [isUploading, setIsUploading] = useState(false);
+  const [categories, setCatecories] = useState([]);
 
   const router = useRouter();
 
-  const data = { name, description, price, images };
+  const data = { name, category, description, price, images };
 
-  console.log(existingImages);
+  useEffect(() => {
+    axios.get("/api/categories").then((result) => {
+      setCatecories(result.data);
+    });
+  }, []);
+
   async function saveProduct(e) {
     e.preventDefault();
 
@@ -65,10 +74,10 @@ function ProductForm({
   }
   return (
     <>
-      <form onSubmit={saveProduct}>
+      <form className="main-form" onSubmit={saveProduct}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="mt-5 grid grid-cols-4 gap-x-4 gap-y-4 sm:grid-cols-4">
               <div className="sm:col-span-4">
                 <label
                   htmlFor="product-name"
@@ -93,6 +102,33 @@ function ProductForm({
                       placeholder="Mate imperial premium"
                     />
                   </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="category-parent"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Categoría
+                </label>
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
+                  <select
+                    name="category-parent"
+                    id="category-parent"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 cls
+                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                  >
+                    <option value="0">Sin categoría</option>
+                    {categories.length > 0 &&
+                      categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
+                        </option>
+                      ))}
+                  </select>
                 </div>
               </div>
 
@@ -132,7 +168,7 @@ function ProductForm({
                       $
                     </span>
                     <input
-                      type="text"
+                      type="number"
                       name="product-price"
                       id="product-price"
                       autoComplete="product-price"
@@ -151,7 +187,7 @@ function ProductForm({
                 >
                   Fotos
                 </label>
-                <div className="flex">
+                <div className="flex flex-wrap">
                   <div className="sm:col-span-3 flex">
                     <ReactSortable
                       className="flex flex-wrap cursor-pointer"
@@ -161,7 +197,7 @@ function ProductForm({
                       {!!images?.length &&
                         images.map((link) => (
                           <div
-                            className="image-container rounded-lg mr-4"
+                            className="image-container rounded-lg mr-4 mb-4"
                             key={link}
                           >
                             {/* eslint-disable-next-line  @next/next/no-img-element */}

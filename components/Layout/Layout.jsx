@@ -1,9 +1,15 @@
-import AsideNav from "@/components/AsideNav/AsideNav";
-import { useSession, signIn, signOut } from "next-auth/react";
-import UserCard from "../User/UserCard";
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+
+import SideNavar from "../SideNavbar/SideNavbar";
+import Header from "@/components/Header/Header";
+import HeaderMobile from "@/components/Header/HeaderMobile";
+import MarginWidthWrapper from "@/components/Layout/MarginWidthWrapper";
+import PageWrapper from "@/components/Layout/PageWrapper";
 
 export default function Layout({ children }) {
   const { data: session } = useSession();
+
   if (!session) {
     return (
       <>
@@ -21,14 +27,19 @@ export default function Layout({ children }) {
     );
   }
   return (
-    <>
-      <div className="bg-gray-200 min-h-screen flex">
-        <AsideNav className="general-navbar" />
-        <div className="general-content m-5">
-          <UserCard />
-          {children}
+    <html lang="en">
+      <body className={`bg-white`}>
+        <div className="flex">
+          <SideNavar />
+          <main className="flex-1">
+            <MarginWidthWrapper>
+              <Header />
+              <HeaderMobile />
+              <PageWrapper>{children}</PageWrapper>
+            </MarginWidthWrapper>
+          </main>
         </div>
-      </div>
-    </>
+      </body>
+    </html>
   );
 }
