@@ -2,122 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-.aside {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 260 75% 3%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 260 75% 3%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 260 75% 3%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 260 75% 3%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 260 75% 3%;
+    --foreground: 210 40% 98%;
+
+    --card: 260 75% 3%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 260 75% 3%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
 
-.general-navbar {
-  width: 15% !important;
-}
-
-.general-content {
-  width: 100% !important;
-  /* padding-left: 236px; */
-}
-
-.navbar-brand-img {
-  width: 160px;
-  height: 42px;
-}
-
-table.basic {
-  @apply w-full bg-white rounded-lg shadow-md overflow-hidden;
-}
-
-table.basic thead tr {
-  background-color: black;
-}
-
-table.basic thead tr th,
-table.basic thead tr td {
-  color: white !important;
-}
-
-table.basic thead tr td,
-table.basic thead tr th {
-  @apply text-sm text-gray-600 uppercase border-b border-black px-4 py-2;
-}
-table.basic tr td {
-  @apply px-4 py-1;
-}
-
-table.basic tr:nth-child(even) {
-  background-color: #e5e7eb;
-}
-
-table.basic a {
-  @apply px-4 rounded-sm inline-flex mx-1 items-center gap-1 text-sm py-1;
-}
-
-table.basic-categories tbody tr td:not(:last-child):not(:nth-child(2)) {
-  border-right: 1px solid #e5e7eb;
-}
-
-table.basic-categories
-  tbody
-  tr:nth-child(even)
-  td:not(:last-child):not(:nth-child(2)) {
-  border-right: 1px solid white;
-}
-
-.btn-default,
-.btn-red {
-  @apply px-4 py-1 rounded-md;
-  width: 100px;
-}
-.btn-red {
-  @apply bg-red-200 text-red-600 px-4 py-1 rounded-sm shadow-sm;
-}
-.btn-default {
-  @apply bg-white text-gray-800 px-4 py-1 rounded-sm border border-gray-200 shadow-sm;
-}
-
-.main-form {
-  max-width: 500px;
-}
-
-.cancel-delete-button {
-  border: 2px solid black;
-  padding: 4px;
-  border-radius: 50px;
-  font-weight: 600;
-}
-
-.cancel-delete-button:hover {
-  color: white;
-  background-color: black;
-}
-
-.delete-button {
-  color: red;
-  border: 2px solid red;
-  padding: 4px;
-  border-radius: 50px;
-  font-weight: 600;
-}
-
-.delete-button:hover {
-  color: white;
-  background-color: red;
-}
-
-.image-container {
-  height: 225px;
-  width: 225px;
-  overflow: hidden;
-}
-
-.add-image {
-  width: 200px;
-}
-
-input,
-textarea {
-  max-width: 500px;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

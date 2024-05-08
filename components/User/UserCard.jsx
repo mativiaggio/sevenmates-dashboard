@@ -8,7 +8,7 @@ function UserCard() {
   if (!session) return null; // Devuelve null si no hay sesión
 
   return (
-    <div className="bg-white p-4 mb-4 rounded-2xl w-fit">
+    <div className="p-4 mb-4 rounded-2xl w-fit">
       <div className="w-full">
         <div className="w-full flex justify-between">
           <div className="flex items-center">
@@ -43,7 +43,7 @@ function UserCard() {
           </div>
         </div>
       </div>
-      <p className="text-gray-600">{session?.user?.email}</p>
+      <p>{session?.user?.email}</p>
     </div>
   );
 }
