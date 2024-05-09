@@ -81,7 +81,7 @@ function ProductForm({
               <div className="sm:col-span-4">
                 <label
                   htmlFor="product-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Nombre
                 </label>
@@ -97,7 +97,7 @@ function ProductForm({
                       value={name}
                       onChange={(ev) => setName(ev.target.value)}
                       // autoComplete="username"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 cls
+                      className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
                       placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                       placeholder="Mate imperial premium"
                     />
@@ -108,7 +108,7 @@ function ProductForm({
               <div className="sm:col-span-4">
                 <label
                   htmlFor="category-parent"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Categoría
                 </label>
@@ -118,7 +118,7 @@ function ProductForm({
                     id="category-parent"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 cls
+                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
                       placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                   >
                     <option value="0">Sin categoría</option>
@@ -135,7 +135,7 @@ function ProductForm({
               <div className="sm:col-span-4">
                 <label
                   htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Descripción
                 </label>
@@ -145,7 +145,7 @@ function ProductForm({
                     name="product-description"
                     value={description}
                     onChange={(ev) => setDescription(ev.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 cls
+                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
                       placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 resize-none"
                   />
                 </div>
@@ -158,7 +158,7 @@ function ProductForm({
               <div className="sm:col-span-4">
                 <label
                   htmlFor="product-price"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Precio
                 </label>
@@ -174,7 +174,7 @@ function ProductForm({
                       autoComplete="product-price"
                       value={price}
                       onChange={(ev) => setPrice(ev.target.value)}
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="50000"
                     />
                   </div>
@@ -183,7 +183,7 @@ function ProductForm({
               <div className="sm:col-span-6">
                 <label
                   htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Fotos
                 </label>
@@ -262,7 +262,7 @@ function ProductForm({
           <Link
             href={"/products"}
             type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 "
           >
             Cancel
           </Link>
