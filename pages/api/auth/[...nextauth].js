@@ -7,6 +7,7 @@ import clientPromise from "@/lib/db";
 const adminEmails = ["matiasviaggio59@gmail.com"];
 
 const authOptions = {
+  secret: process.env.AUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
