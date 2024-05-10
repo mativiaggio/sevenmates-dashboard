@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Layout>
         <Sheet>
-          <SheetTrigger>Open</SheetTrigger>
+          <SheetTrigger>Click to Open</SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Are you absolutely sure?</SheetTitle>
