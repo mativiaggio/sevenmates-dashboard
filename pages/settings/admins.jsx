@@ -36,8 +36,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Pencil } from "lucide-react";
 import axios from "axios";
+import Spinner from "@/components/Spinners/Spinner";
 
 function Admins() {
+  const [isLoading, setIsLoading] = useState(true);
   const [editedAdmin, setEditedAdmin] = useState(null);
   const [admins, setAdmins] = useState([]);
   const [email, setEmail] = useState("");
@@ -55,8 +57,10 @@ function Admins() {
     fetchAdmins();
   }, []);
   function fetchAdmins() {
+    setIsLoading(true);
     axios.get("/api/admins").then((result) => {
       setAdmins(result.data);
+      setIsLoading(false);
     });
   }
 
@@ -153,7 +157,17 @@ function Admins() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {admins.length > 0 &&
+            {isLoading ? (
+              <TableRow>
+                <TableCell className="w-full flex items-center justify-start">
+                  <Spinner />
+                  <span className="ml-2">
+                    Para la emoción! Estamos cargando...
+                  </span>
+                </TableCell>
+              </TableRow>
+            ) : (
+              admins.length > 0 &&
               admins.map((admin) => (
                 <TableRow id={admin._id} key={admin._id}>
                   <TableCell>{admin.email}</TableCell>
@@ -197,7 +211,8 @@ function Admins() {
                     </AlertDialog>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            )}
           </TableBody>
         </Table>
       )}

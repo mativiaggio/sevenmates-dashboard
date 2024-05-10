@@ -36,8 +36,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import SpinnerBar from "@/components/Spinners/SpinnerBar";
+import Spinner from "@/components/Spinners/Spinner";
 
-export default function Categories({ swal }) {
+export default function Categories() {
+  const [isLoading, setIsLoading] = useState(true);
   const [editedCategory, setEditedCategory] = useState(null);
   const [name, setName] = useState("");
   const [parentCategory, setParentCategory] = useState("");
@@ -47,8 +50,10 @@ export default function Categories({ swal }) {
     fetchCategories();
   }, []);
   function fetchCategories() {
+    setIsLoading(true);
     axios.get("/api/categories").then((result) => {
       setCategories(result.data);
+      setIsLoading(false);
     });
   }
   async function saveCategory(ev) {
@@ -291,7 +296,17 @@ export default function Categories({ swal }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories.length > 0 &&
+            {isLoading ? (
+              <TableRow>
+                <TableCell className="w-full flex items-center justify-start">
+                  <Spinner />
+                  <span className="ml-2">
+                    Para la emoción! Estamos cargando...
+                  </span>
+                </TableCell>
+              </TableRow>
+            ) : (
+              categories.length > 0 &&
               categories.map((category) => (
                 <TableRow id={category._id} key={category._id}>
                   <TableCell>{category.name}</TableCell>
@@ -330,12 +345,11 @@ export default function Categories({ swal }) {
                     </AlertDialog>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            )}
           </TableBody>
         </Table>
       )}
     </Layout>
   );
 }
-
-// export default withSwal((ref) => <Categories />);

@@ -14,12 +14,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/Spinners/Spinner";
 
 function Products() {
+  const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     axios.get("/api/products").then((response) => {
       setProducts(response.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -43,31 +47,42 @@ function Products() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((product) => (
-              <TableRow id={product._id} key={product._id}>
-                <TableCell>{product.name}</TableCell>
-                <TableCell className="float-right flex justify-between w-full">
-                  <Link
-                    className="btn-default"
-                    href={"/products/edit/" + product._id}
-                  >
-                    <Button className="btn-default flex items-center justify-around mr-4 hover:bg-black bg-gray-600">
-                      <Pencil />
-                      Editar
-                    </Button>
-                  </Link>
-                  <Link
-                    className="btn-red"
-                    href={"/products/delete/" + product._id}
-                  >
-                    <Button className="btn-red flex items-center justify-around hover:bg-red-500 bg-red-400 text-white">
-                      <Trash2 />
-                      Eliminar
-                    </Button>
-                  </Link>
+            {isLoading ? (
+              <TableRow>
+                <TableCell className="w-full flex items-center justify-start">
+                  <Spinner />
+                  <span className="ml-2">
+                    Para la emoción! Estamos cargando...
+                  </span>
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              products.map((product) => (
+                <TableRow id={product._id} key={product._id}>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell className="float-right flex justify-between w-full">
+                    <Link
+                      className="btn-default"
+                      href={"/products/edit/" + product._id}
+                    >
+                      <Button className="btn-default flex items-center justify-around mr-4 hover:bg-black bg-gray-600">
+                        <Pencil />
+                        Editar
+                      </Button>
+                    </Link>
+                    <Link
+                      className="btn-red"
+                      href={"/products/delete/" + product._id}
+                    >
+                      <Button className="btn-red flex items-center justify-around hover:bg-red-500 bg-red-400 text-white">
+                        <Trash2 />
+                        Eliminar
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
