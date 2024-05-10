@@ -74,3 +74,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.image-container {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+}
+
+.add-image {
+  width: 200px;
+}

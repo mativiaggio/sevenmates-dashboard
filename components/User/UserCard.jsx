@@ -1,11 +1,18 @@
 import React from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function UserCard() {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (!session) return null; // Devuelve null si no hay sesión
+
+  async function logout() {
+    await router.push("/");
+    await signOut();
+  }
 
   return (
     <div className="p-4 mb-4 rounded-2xl w-fit">
@@ -23,7 +30,7 @@ function UserCard() {
             <div className="ml-2">{session?.user?.name}</div>
           </div>
           <div>
-            <button onClick={() => signOut()}>
+            <button onClick={() => logout()}>
               {/* Ahora la función signOut está envuelta en una función de flecha */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

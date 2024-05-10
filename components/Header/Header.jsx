@@ -15,10 +15,10 @@ const Header = () => {
   return (
     <div
       className={cn(
-        `sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200`,
+        `sticky inset-x-0 top-0 z-30 w-full transition-all bg-zinc-100`,
         {
-          "border-b border-gray-200 bg-white/75 backdrop-blur-lg": scrolled,
-          "border-b border-gray-200 bg-white": selectedLayout,
+          // "border-b border-gray-200 bg-white/75 backdrop-blur-lg": scrolled,
+          "border-b border-gray-200 bg-zinc-100": selectedLayout,
         }
       )}
     >

@@ -29,8 +29,12 @@ export const SIDENAV_ITEMS = [
     submenu: true,
     subMenuItems: [
       {
-        title: "Account",
+        title: "Admins",
         path: "/settings/admins",
+      },
+      {
+        title: "Account",
+        path: "/settings/account",
       },
     ],
   },

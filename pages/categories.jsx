@@ -38,27 +38,30 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-function Categories({ swal }) {
+export default function Categories({ swal }) {
+  const [editedCategory, setEditedCategory] = useState(null);
   const [name, setName] = useState("");
   const [parentCategory, setParentCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [editedCategory, setEditedCategory] = useState(null);
   const [properties, setProperties] = useState([]);
-
   useEffect(() => {
     fetchCategories();
   }, []);
-
   function fetchCategories() {
     axios.get("/api/categories").then((result) => {
       setCategories(result.data);
     });
   }
-
-  async function saveCategory(e) {
-    e.preventDefault();
-    const data = { name, parentCategory };
-
+  async function saveCategory(ev) {
+    ev.preventDefault();
+    const data = {
+      name,
+      parentCategory,
+      properties: properties.map((p) => ({
+        name: p.name,
+        values: p.values.split(","),
+      })),
+    };
     if (editedCategory) {
       data._id = editedCategory._id;
       await axios.put("/api/categories", data);
@@ -66,16 +69,25 @@ function Categories({ swal }) {
     } else {
       await axios.post("/api/categories", data);
     }
-
     setName("");
     setParentCategory("");
+    setProperties([]);
     fetchCategories();
   }
-
   function editCategory(category) {
     setEditedCategory(category);
     setName(category.name);
     setParentCategory(category.parent?._id);
+    if (category.properties) {
+      setProperties(
+        category.properties.map(({ name, values }) => ({
+          name,
+          values: values.join(","),
+        }))
+      );
+    } else {
+      setProperties([]);
+    }
   }
 
   async function deleteCategory(category) {
@@ -89,7 +101,6 @@ function Categories({ swal }) {
       return [...prev, { name: "", values: "" }];
     });
   }
-
   function handlePropertyNameChange(index, property, newName) {
     setProperties((prev) => {
       const properties = [...prev];
@@ -97,15 +108,14 @@ function Categories({ swal }) {
       return properties;
     });
   }
-
   function handlePropertyValuesChange(index, property, newValues) {
+    const sanitizedValues = newValues.replace(/\s/g, "");
     setProperties((prev) => {
       const properties = [...prev];
-      properties[index].values = newValues;
+      properties[index].values = sanitizedValues;
       return properties;
     });
   }
-
   function removeProperty(indexToRemove) {
     setProperties((prev) => {
       return [...prev].filter((p, pIndex) => {
@@ -113,10 +123,9 @@ function Categories({ swal }) {
       });
     });
   }
-
   return (
     <Layout>
-      <div className="sm:mr-5 sm:w-1/2">
+      <div className="sm:mr-5">
         <h2 className="text-base font-semibold leading-7 ">
           {editedCategory
             ? `Editando categoría ${editedCategory.name}.`
@@ -194,12 +203,6 @@ function Categories({ swal }) {
             <div className="border-b border-gray-900/10">
               <div className="mt-5 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-4">
                 <div className="sm:col-span-4">
-                  {/* <label
-                    htmlFor="category-properties"
-                    className="block text-sm font-medium leading-6 "
-                  >
-                    Prpiedades
-                  </label> */}
                   <div className="mt-2">
                     <div className="flex flex-col rounded-md shadow-sm">
                       <Button type={"button"} onClick={addProperty}>
@@ -208,10 +211,7 @@ function Categories({ swal }) {
                       <div>
                         {properties.length > 0 &&
                           properties.map((property, index) => (
-                            <div
-                              key={property.name}
-                              className="flex gap-1 my-2"
-                            >
+                            <div key={index} className="flex gap-1 my-2">
                               <Input
                                 type="text"
                                 value={property.name}
@@ -223,7 +223,7 @@ function Categories({ swal }) {
                                     ev.target.value
                                   )
                                 }
-                                placeholder="Nombre (ejemplo: color)"
+                                placeholder="Nombre (ej: color)"
                               />
                               <Input
                                 type="text"
@@ -236,22 +236,22 @@ function Categories({ swal }) {
                                   )
                                 }
                                 value={property.values}
-                                placeholder="Valores, separados por coma"
+                                placeholder="Valores (ej: Negro,Marrón)"
                               />
                               <Button
                                 onClick={() => removeProperty(index)}
                                 type="button"
                                 className="btn-red"
                               >
-                                Remove
+                                Eliminar
                               </Button>
                             </div>
                           ))}
                       </div>
                     </div>
                     <p className="my-3 text-sm leading-6 text-gray-600">
-                      Con este campo podes agregar una nueva categoría para los
-                      productos. Las categorías se usaran para buscar.
+                      Ingresas el nombre y sus valores, nota que la separación
+                      de los valores debe ser una coma y no debe tener espacios.
                     </p>
                   </div>
                 </div>
@@ -265,6 +265,7 @@ function Categories({ swal }) {
                   setEditedCategory(null);
                   setName("");
                   setParentCategory("");
+                  setProperties([]);
                 }}
                 type="button"
                 className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
@@ -299,13 +300,13 @@ function Categories({ swal }) {
                   <TableCell className="float-right flex">
                     <Button
                       onClick={() => editCategory(category)}
-                      className="btn-default flex items-center justify-around mr-4 hover:bg-black bg-gray-600"
+                      className="btn-default flex items-center justify-around mr-4"
                     >
                       <Pencil />
                       Editar
                     </Button>
                     <AlertDialog>
-                      <AlertDialogTrigger className="whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 btn-default flex items-center justify-around mr-4 hover:bg-red-500 bg-red-400">
+                      <AlertDialogTrigger className="whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 btn-default flex items-center justify-around mr-4 hover:bg-red-400 bg-red-500">
                         Eliminar
                       </AlertDialogTrigger>
                       <AlertDialogContent>
@@ -338,4 +339,4 @@ function Categories({ swal }) {
   );
 }
 
-export default withSwal(({ swal }, ref) => <Categories swal={swal} />);
+// export default withSwal((ref) => <Categories />);

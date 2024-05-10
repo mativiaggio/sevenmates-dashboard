@@ -1,9 +1,21 @@
 import SpinnerBar from "@/components/Spinners/SpinnerBar";
+import { Input } from "@/components/ui/input";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 function ProductForm({
   _id,
@@ -90,15 +102,15 @@ function ProductForm({
                     {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
                         workcation.com/
                       </span> */}
-                    <input
+                    <Input
                       type="text"
                       name="product-name"
                       id="product-name"
                       value={name}
                       onChange={(ev) => setName(ev.target.value)}
                       // autoComplete="username"
-                      className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
-                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                      // className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
+                      // placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                       placeholder="Mate imperial premium"
                     />
                   </div>
@@ -113,7 +125,7 @@ function ProductForm({
                   Categoría
                 </label>
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
-                  <select
+                  {/* <select
                     name="category-parent"
                     id="category-parent"
                     value={category}
@@ -128,7 +140,37 @@ function ProductForm({
                           {category.name}
                         </option>
                       ))}
-                  </select>
+                  </select> */}
+                  <Select
+                    name="category-parent"
+                    id="category-parent"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
+                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una Categoría" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Categorías Disponibles</SelectLabel>
+                        <SelectItem value="0" className="cursor-pointer">
+                          Sin categoría
+                        </SelectItem>
+                        {categories.length > 0 &&
+                          categories.map((category) => (
+                            <SelectItem
+                              className="cursor-pointer"
+                              key={category._id}
+                              value={category._id}
+                            >
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -140,13 +182,11 @@ function ProductForm({
                   Descripción
                 </label>
                 <div className="mt-2">
-                  <textarea
+                  <Textarea
                     id="product-description"
                     name="product-description"
                     value={description}
                     onChange={(ev) => setDescription(ev.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
-                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 resize-none"
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -163,18 +203,18 @@ function ProductForm({
                   Precio
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black  overflow-hidden bg-white">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-offset ring-gray-300 focus-within:ring-2 focus-within:ring-offset focus-within:ring-black  overflow-hidden bg-white">
                     <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
                       $
                     </span>
-                    <input
+                    <Input
                       type="number"
                       name="product-price"
                       id="product-price"
                       autoComplete="product-price"
                       value={price}
                       onChange={(ev) => setPrice(ev.target.value)}
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus-visible:ring-0 focus-visible:ring-offset-0"
                       placeholder="50000"
                     />
                   </div>
@@ -213,7 +253,7 @@ function ProductForm({
                       </div>
                     </div>
                   )}
-                  <div className="sm:col-span-3 flex">
+                  <div className="sm:col-span-3 flex mb-4">
                     <div className="add-image flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                       <div className="text-center flex flex-col items-center">
                         <svg
@@ -236,7 +276,7 @@ function ProductForm({
                             htmlFor="file-upload"
                             className="relative cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 hover:text-black px-1"
                           >
-                            <span className="underline">Upload a file</span>
+                            <span className="underline">Subí el fotón</span>
                             <input
                               onChange={uploadImages}
                               id="file-upload"
@@ -245,7 +285,9 @@ function ProductForm({
                               className="sr-only"
                             />
                           </label>
-                          <p className="pl-1">or drag and drop</p>
+                          <p className="pl-1 text-xs">
+                            Podes agarrar y arrastrar (en teoría)
+                          </p>
                         </div>
                         <p className="text-xs leading-5 text-gray-600">
                           PNG, JPG

@@ -15,7 +15,7 @@ const SideNavar = () => {
         <div>
           <Link
             href="/"
-            className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
+            className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6  h-12 w-full"
           >
             {/* eslint-disable @next/next/no-img-element */}
             <img
