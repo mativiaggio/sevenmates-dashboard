@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout/Layout";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { withSwal } from "react-sweetalert2";
 import { Pencil, Trash2 } from "lucide-react";
 
 import {
