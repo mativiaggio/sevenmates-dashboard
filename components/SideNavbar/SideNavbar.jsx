@@ -33,7 +33,6 @@ const SideNavar = () => {
             })}
           </div>
         </div>
-        <UserCard />
       </div>
     </div>
   );

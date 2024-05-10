@@ -24,9 +24,13 @@ export function ModeToggle() {
           className="w-fit border-none align-center"
         >
           <div className="flex items-center">
-            <Moon className="h-[24px] w-[24px] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Sun className="absolute h-[24px] w-[24px] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="font-semibold text-xl flex ml-4">
+            {/* <Moon className="h-[24px] w-[24px] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Sun className="absolute h-[24px] w-[24px] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" /> */}
+            <span
+              className={`text-xl flex ${
+                window.innerWidth <= 767 ? "font-normal" : "font-semibold"
+              } `}
+            >
               Modo <span className="text-transparent">Oscuro</span>
             </span>
           </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "../ui/button";
 
-function UserCard() {
+function LogoutButton() {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -15,21 +15,16 @@ function UserCard() {
     await signOut();
   }
 
-  function truncateName(name) {
-    return name.length > 8 ? name.substring(0, 8) + "..." : name;
-  }
-
   return (
     <>
-      <div
-        className={`bg-transparent hover:bg-transparent text-black dark:text-white text-xl flex p-0 ${
-          window.innerWidth <= 767 ? "font-normal" : "font-semibold"
-        }`}
+      <Button
+        onClick={logout}
+        className="bg-transparent hover:bg-transparent text-black dark:text-white p-0"
       >
-        {truncateName(session?.user?.name)}
-      </div>
+        <span className="text-base font-normal">Cerrar sesión</span>
+      </Button>
     </>
   );
 }
 
-export default UserCard;
+export default LogoutButton;

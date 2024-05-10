@@ -1,9 +1,5 @@
 import Layout from "@/components/Layout/Layout";
 import ProductForm from "@/components/Products/Form/ProductForm";
-import UserCard from "@/components/User/UserCard";
-import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 
 import { useState } from "react";

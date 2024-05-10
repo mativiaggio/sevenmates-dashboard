@@ -63,7 +63,11 @@ const HeaderMobile = () => {
           return (
             <div key={idx}>
               {item.submenu ? (
-                <MenuItemWithSubMenu item={item} toggleOpen={toggleOpen} />
+                <MenuItemWithSubMenu
+                  key={idx}
+                  item={item}
+                  toggleOpen={toggleOpen}
+                />
               ) : (
                 <MenuItem>
                   <Link
