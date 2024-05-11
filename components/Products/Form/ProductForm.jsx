@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+
 function ProductForm({
   _id,
   name: existingName,
@@ -24,20 +27,22 @@ function ProductForm({
   description: existingDescription,
   price: existingPrice,
   images: existingImages,
+  featured: existingFeatured,
 }) {
   const [name, setName] = useState(existingName || "");
-  // const [category, setCategory] = useState(existingCategory || []);
   const [category, setCategory] = useState(existingCategory || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
   const [goToProducts, setGoToProducts] = useState(false);
   const [images, setImages] = useState(existingImages || []);
+  const [featured, setFeatured] = useState(existingFeatured || false);
+
   const [isUploading, setIsUploading] = useState(false);
   const [categories, setCatecories] = useState([]);
 
   const router = useRouter();
 
-  const data = { name, category, description, price, images };
+  const data = { name, category, description, price, images, featured };
 
   useEffect(() => {
     axios.get("/api/categories").then((result) => {
@@ -99,18 +104,12 @@ function ProductForm({
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
-                    {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                        workcation.com/
-                      </span> */}
                     <Input
                       type="text"
                       name="product-name"
                       id="product-name"
                       value={name}
                       onChange={(ev) => setName(ev.target.value)}
-                      // autoComplete="username"
-                      // className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
-                      // placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                       placeholder="Mate imperial premium"
                     />
                   </div>
@@ -125,22 +124,6 @@ function ProductForm({
                   Categoría
                 </label>
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
-                  {/* <select
-                    name="category-parent"
-                    id="category-parent"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 cls
-                      placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-                  >
-                    <option value="0">Sin categoría</option>
-                    {categories.length > 0 &&
-                      categories.map((category) => (
-                        <option key={category._id} value={category._id}>
-                          {category.name}
-                        </option>
-                      ))}
-                  </select> */}
                   <Select
                     name="category-parent"
                     id="category-parent"
@@ -220,6 +203,20 @@ function ProductForm({
                   </div>
                 </div>
               </div>
+              <div className="sm:col-span-4">
+                <div className="mt-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="terms"
+                      checked={featured}
+                      onCheckedChange={(checked) => setFeatured(checked)}
+                    />
+                    <Label htmlFor="terms">
+                      Este es un producto seleccionado
+                    </Label>
+                  </div>
+                </div>
+              </div>
               <div className="sm:col-span-6">
                 <label
                   htmlFor="cover-photo"
@@ -271,7 +268,7 @@ function ProductForm({
                           />
                         </svg>
 
-                        <div className="mt-4 flex text-sm leading-6 text-gray-600 flex flex-col">
+                        <div className="mt-4 flex text-sm leading-6 text-gray-600 flex-col">
                           <label
                             htmlFor="file-upload"
                             className="relative cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 hover:text-black px-1"
