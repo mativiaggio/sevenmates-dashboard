@@ -21,7 +21,6 @@ const authOptions = {
       await mongooseConnect();
       const admins = await Admin.find({}, "email");
       const adminEmails2 = admins.map((admin) => admin.email);
-      console.log("Estos son los emails: ", adminEmails2);
 
       if (adminEmails2.includes(session?.user?.email)) {
         return session;
@@ -40,7 +39,6 @@ export async function isAdminRequest(req, res) {
   await mongooseConnect();
   const admins = await Admin.find({}, "email");
   const adminEmails2 = admins.map((admin) => admin.email);
-  console.log("Estos son los emails: ", adminEmails2);
 
   if (!adminEmails2.includes(session?.user?.email)) {
     res.status(401);

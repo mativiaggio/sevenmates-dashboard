@@ -72,7 +72,6 @@ function ProductForm({
       setIsUploading(true);
 
       const data = new FormData();
-      console.log("data", data);
 
       for (const file of files) {
         data.append("file", file);

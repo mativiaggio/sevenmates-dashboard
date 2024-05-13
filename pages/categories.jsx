@@ -173,7 +173,7 @@ export default function Categories() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
                     <Select
                       value={parentCategory}
-                      onChange={(e) => setParentCategory(e.target.value)}
+                      onValueChange={(value) => setParentCategory(value)}
                       className="cursor-pointer"
                     >
                       <SelectTrigger>
