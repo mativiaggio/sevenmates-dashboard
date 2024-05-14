@@ -160,7 +160,7 @@ function Admins() {
             {isLoading ? (
               <TableRow>
                 <TableCell className="w-full flex items-center justify-start">
-                  <Spinner />
+                  <Spinner color="#060606" size={20} />
                   <span className="ml-2">
                     Para la emoción! Estamos cargando...
                   </span>
