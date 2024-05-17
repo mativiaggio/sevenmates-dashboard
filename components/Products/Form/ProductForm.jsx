@@ -42,7 +42,15 @@ function ProductForm({
 
   const router = useRouter();
 
-  const data = { name, category, description, price, images, featured };
+  const data = {
+    name,
+    category,
+    description,
+    price,
+    images,
+    featured,
+    slug: name.toLowerCase().replace(/\s/g, "-"),
+  };
 
   useEffect(() => {
     axios.get("/api/categories").then((result) => {

@@ -65,6 +65,7 @@ export default function Categories() {
         name: p.name,
         values: p.values.split(","),
       })),
+      slug: name.toLowerCase().replace(/\s/g, "-"),
     };
     if (editedCategory) {
       data._id = editedCategory._id;
@@ -177,12 +178,12 @@ export default function Categories() {
                       className="cursor-pointer"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecciona una Categoría" />
+                        <SelectValue placeholder="Selecciona una categoría (default padre)" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Categorías Disponibles</SelectLabel>
-                          <SelectItem value="0" className="cursor-pointer">
+                          <SelectLabel>Categoría Disponibles</SelectLabel>
+                          <SelectItem value={null} className="cursor-pointer">
                             Categoría Padre
                           </SelectItem>
                           {categories.length > 0 &&

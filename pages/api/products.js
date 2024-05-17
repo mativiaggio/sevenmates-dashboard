@@ -17,7 +17,10 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
-    const { name, category, description, price, images, featured } = req.body;
+    const { name, category, description, price, images, featured, slug } =
+      req.body;
+
+    console.log("El slug es: " + slug);
 
     const productDoc = await Product.create({
       name,
@@ -26,18 +29,20 @@ export default async function handler(req, res) {
       price,
       images,
       featured,
+      slug, // Asegúrate de incluir el slug aquí
     });
 
     res.json(productDoc);
   }
 
   if (method === "PUT") {
-    const { name, category, description, price, images, featured, _id } =
+    const { name, category, description, price, images, featured, slug, _id } =
       req.body;
 
+    console.log("El slug es: " + slug);
     await Product.updateOne(
       { _id },
-      { name, category, description, price, images, featured }
+      { name, category, description, price, images, featured, slug }
     );
 
     res.json(true);
