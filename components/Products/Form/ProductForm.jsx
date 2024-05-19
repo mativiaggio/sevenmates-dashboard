@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 function ProductForm({
   _id,
@@ -28,6 +29,7 @@ function ProductForm({
   price: existingPrice,
   images: existingImages,
   featured: existingFeatured,
+  properties: existingProperties,
 }) {
   const [name, setName] = useState(existingName || "");
   const [category, setCategory] = useState(existingCategory || "");
@@ -40,9 +42,22 @@ function ProductForm({
   const [isUploading, setIsUploading] = useState(false);
   const [categories, setCatecories] = useState([]);
 
+  const [properties, setProperties] = useState(existingProperties || []);
+
   const router = useRouter();
 
-  const data = { name, category, description, price, images, featured };
+  const data = {
+    name,
+    category,
+    description,
+    price,
+    images,
+    featured,
+    properties: properties.map((p) => ({
+      name: p.name,
+      values: p.values.split(","),
+    })),
+  };
 
   useEffect(() => {
     axios.get("/api/categories").then((result) => {
@@ -72,7 +87,6 @@ function ProductForm({
       setIsUploading(true);
 
       const data = new FormData();
-      console.log("data", data);
 
       for (const file of files) {
         data.append("file", file);
@@ -88,6 +102,34 @@ function ProductForm({
 
   function updateImagesOrder(images) {
     setImages(images);
+  }
+
+  function addProperty() {
+    setProperties((prev) => {
+      return [...prev, { name: "", values: "" }];
+    });
+  }
+  function handlePropertyNameChange(index, property, newName) {
+    setProperties((prev) => {
+      const properties = [...prev];
+      properties[index].name = newName;
+      return properties;
+    });
+  }
+  function handlePropertyValuesChange(index, property, newValues) {
+    const sanitizedValues = newValues.replace(/\s/g, "");
+    setProperties((prev) => {
+      const properties = [...prev];
+      properties[index].values = sanitizedValues;
+      return properties;
+    });
+  }
+  function removeProperty(indexToRemove) {
+    setProperties((prev) => {
+      return [...prev].filter((p, pIndex) => {
+        return pIndex !== indexToRemove;
+      });
+    });
   }
   return (
     <>
@@ -200,6 +242,66 @@ function ProductForm({
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus-visible:ring-0 focus-visible:ring-offset-0"
                       placeholder="50000"
                     />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-4">
+                <div className="border-b border-gray-900/10">
+                  <div className="mt-5 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-4">
+                    <div className="sm:col-span-4">
+                      <div className="mt-2">
+                        <div className="flex flex-col rounded-md shadow-sm">
+                          <Button type={"button"} onClick={addProperty}>
+                            Agregar nuevas propiedades
+                          </Button>
+                          <div>
+                            {properties.length > 0 &&
+                              properties.map((property, index) => (
+                                <div key={index} className="flex gap-1 my-2">
+                                  <Input
+                                    type="text"
+                                    value={property.name}
+                                    className="mb-0"
+                                    onChange={(ev) =>
+                                      handlePropertyNameChange(
+                                        index,
+                                        property,
+                                        ev.target.value
+                                      )
+                                    }
+                                    placeholder="Nombre (ej: color)"
+                                  />
+                                  <Input
+                                    type="text"
+                                    className="mb-0"
+                                    onChange={(ev) =>
+                                      handlePropertyValuesChange(
+                                        index,
+                                        property,
+                                        ev.target.value
+                                      )
+                                    }
+                                    value={property.values}
+                                    placeholder="Valores (ej: Negro,Marrón)"
+                                  />
+                                  <Button
+                                    onClick={() => removeProperty(index)}
+                                    type="button"
+                                    className="btn-red"
+                                  >
+                                    Eliminar
+                                  </Button>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                        <p className="my-3 text-sm leading-6 text-gray-600">
+                          Ingresas el nombre y sus valores, nota que la
+                          separación de los valores debe ser una coma y no debe
+                          tener espacios.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

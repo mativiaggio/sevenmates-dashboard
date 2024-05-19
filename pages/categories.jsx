@@ -46,6 +46,7 @@ export default function Categories() {
   const [parentCategory, setParentCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [properties, setProperties] = useState([]);
+
   useEffect(() => {
     fetchCategories();
   }, []);
