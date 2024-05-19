@@ -53,6 +53,7 @@ function ProductForm({
     price,
     images,
     featured,
+    slug: name.toLowerCase().replace(/\s/g, "-"),
     properties: properties.map((p) => ({
       name: p.name,
       values: p.values.split(","),

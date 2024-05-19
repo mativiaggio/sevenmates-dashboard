@@ -66,6 +66,7 @@ export default function Categories() {
         name: p.name,
         values: p.values.split(","),
       })),
+      slug: name.toLowerCase().replace(/\s/g, "-"),
     };
     if (editedCategory) {
       data._id = editedCategory._id;
@@ -174,16 +175,16 @@ export default function Categories() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black">
                     <Select
                       value={parentCategory}
-                      onChange={(e) => setParentCategory(e.target.value)}
+                      onValueChange={(value) => setParentCategory(value)}
                       className="cursor-pointer"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecciona una Categoría" />
+                        <SelectValue placeholder="Selecciona una categoría (default padre)" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Categorías Disponibles</SelectLabel>
-                          <SelectItem value="0" className="cursor-pointer">
+                          <SelectLabel>Categoría Disponibles</SelectLabel>
+                          <SelectItem value={null} className="cursor-pointer">
                             Categoría Padre
                           </SelectItem>
                           {categories.length > 0 &&
@@ -300,7 +301,7 @@ export default function Categories() {
             {isLoading ? (
               <TableRow>
                 <TableCell className="w-full flex items-center justify-start">
-                  <Spinner />
+                  <Spinner color="#060606" size={20} />
                   <span className="ml-2">
                     Para la emoción! Estamos cargando...
                   </span>

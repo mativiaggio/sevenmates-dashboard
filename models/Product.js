@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
   images: [{ type: String }],
   featured: Boolean,
   properties: [{ type: Object }],
+  slug: { type: String, required: true },
 });
 
 export const Product = models.Product || model("Product", ProductSchema);
