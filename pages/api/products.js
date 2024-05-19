@@ -28,8 +28,6 @@ export default async function handler(req, res) {
       properties,
     } = req.body;
 
-    console.log("El slug es: " + slug);
-
     const productDoc = await Product.create({
       name,
       category,
